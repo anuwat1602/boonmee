@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#071527" />
+    <title>ลอยกระทง - Loy Krathong Virtual World</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="welcome" class="welcome-screen">
+      <div class="welcome-stars"></div>
+      <main class="welcome-card">
+        <div class="brand-mark">ลอย</div>
+        <h1>ลอยกระทง <span>Virtual World</span></h1>
+        <p class="subtitle">ร่วมสืบสานประเพณีใต้แสงจันทร์กลางน้ำ</p>
+
+        <label>ชื่อเล่น
+          <input id="nameInput" type="text" maxlength="18" placeholder="เช่น แสงเดือน" />
+        </label>
+
+        <div class="choice-row">
+          <fieldset>
+            <legend>ชุดตัวละคร</legend>
+            <div class="choice-grid two">
+              <label class="choice"><input type="radio" name="outfit" value="thai" checked /><span>ชุดไทย</span></label>
+              <label class="choice"><input type="radio" name="outfit" value="casual" /><span>ชุดลำลอง</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>รูปแบบกระทง</legend>
+            <div class="choice-grid three" id="krathongChoices">
+              <label class="choice kr-choice"><input type="radio" name="krathong" value="banana" /><span>ใบตอง</span></label>
+              <label class="choice kr-choice"><input type="radio" name="krathong" value="lotus" checked /><span>ดอกบัว</span></label>
+              <label class="choice kr-choice"><input type="radio" name="krathong" value="bread" /><span>ขนมปัง</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <label>คำอธิษฐาน
+          <textarea id="prayerInput" maxlength="140" placeholder="เขียนความตั้งใจดี..."></textarea>
+        </label>
+
+        <button id="joinBtn" class="join-button">เข้าร่วมงานลอยกระทง <span>→</span></button>
+      </main>
+    </div>
+
+    <main id="game" class="game-shell" aria-label="โลกลอยกระทง">
+      <canvas id="world"></canvas>
+
+      <header class="topbar glass">
+        <div class="location">
+          <span class="live-dot"></span>
+          <div><strong>ลำน้ำเชียงคาน</strong><small><span id="onlineCount">1</span> คนออนไลน์</small></div>
+        </div>
+        <div class="top-actions">
+          <button id="lanternBtn" class="icon-button" title="ปล่อยโคม">โคมลอย</button>
+          <button id="fireworkBtn" class="icon-button" title="จุดพลุ">จุดพลุ</button>
+          <button id="soundBtn" class="icon-button" title="เปิดเสียง">เสียงปิด</button>
+        </div>
+      </header>
+
+      <aside id="krathongPanel" class="krathong-panel glass hidden">
+        <button id="closePanel" class="close-panel">×</button>
+        <small>กระทงของ</small>
+        <h2 id="panelOwner"></h2>
+        <p id="panelPrayer"></p>
+        <div class="panel-footer">
+          <button id="heartBtn" class="heart-button">♡ สาธุ <span id="heartCount">0</span></button>
+        </div>
+      </aside>
+
+      <aside id="toast" class="toast hidden"></aside>
+
+      <div class="dpad" id="dpad" aria-label="ปุ่มควบคุม">
+        <button data-dir="up" class="dpad-up">▲</button>
+        <button data-dir="left" class="dpad-left">◀</button>
+        <button data-dir="down" class="dpad-down">▼</button>
+        <button data-dir="right" class="dpad-right">▶</button>
+      </div>
+
+      <div class="action-zone">
+        <button id="carryBtn" class="action-button"><span class="action-icon">🎋</span><small id="carryLabel">ถือกระทง</small></button>
+        <button id="releaseBtn" class="action-button release" disabled><span class="action-icon">🌊</span><small>ลอยกระทง</small></button>
+      </div>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
